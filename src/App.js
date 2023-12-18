@@ -1,4 +1,4 @@
-import { Environment, OrbitControls } from '@react-three/drei';
+import { CameraControls, Environment } from '@react-three/drei';
 import { Canvas, useLoader } from '@react-three/fiber';
 import React from 'react';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Canvas camera={{ fov: 65, position: [5, 5, 5] }}>
-          <OrbitControls/>
+          <CameraControls makeDefault minAzimuthAngle={Math.PI / 5} maxAzimuthAngle={Math.PI / 3} minPolarAngle={1.1} maxPolarAngle={Math.PI / 2.25} />
           <MyStage/>
           <MyDesk/>
           <MyBoard/>
