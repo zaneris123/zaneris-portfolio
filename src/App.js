@@ -1,5 +1,5 @@
-import { CameraControls, Environment } from '@react-three/drei';
-import { Canvas, useLoader } from '@react-three/fiber';
+import { Environment, FirstPersonControls } from '@react-three/drei';
+import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import React from 'react';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import './App.css';
@@ -8,8 +8,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Canvas camera={{ fov: 65, position: [5, 5, 5] }}>
-          <CameraControls makeDefault minAzimuthAngle={Math.PI / 5} maxAzimuthAngle={Math.PI / 3} minPolarAngle={1.1} maxPolarAngle={Math.PI / 2.25} />
+        <Canvas camera={{ fov: 65, position: [5, 2.5, 5] }}>
+          <FirstPersonControls makeDefault enabled={true} lookVertical={false}/>
           <MyStage/>
           <MyDesk/>
           <MyBoard/>
@@ -34,6 +34,10 @@ function MyStage(){
 function MyDesk(){
   const deskMesh = React.useRef();
   const desk = useLoader(GLTFLoader, "Desk.gltf")
+  useFrame(({clock})=>{
+    const a = clock.getElapsedTime();
+    if(a < 0.5)deskMesh.current.position.y =+ a;
+  })
   return (
     <mesh ref={deskMesh}>
       <primitive object={desk.scene}/>
